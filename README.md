@@ -102,7 +102,7 @@ Here, **rmi** means -- remove image
 
 
 ### Workflow
-**1. First, Search for an image in Docker Hub 
+**1. First, Search for an image in Docker Hub**
  
 ```bash
 docker search <image_name>
@@ -140,9 +140,83 @@ kousik93/hello-world
 ```
 **NB: Official [OK] means Official Image from Docker.**
 
-**2. Second, pull *hello-world* image from docker hub.
+**2. Second, pull *hello-world* image from docker hub.**
 ```bash
 docker pull <image_name> [replace with your desire image_name]
 
 docker pull hello-world
+
+Output:
+
+
+Using default tag: latest
+latest: Pulling from library/hello-world
+17eec7bbc9d7: Pull complete 
+Digest: sha256:a0dfb02aac212703bfcb339d77d47ec32c8706ff250850ecc0e19c8737b18567
+Status: Downloaded newer image for hello-world:latest
+docker.io/library/hello-world:latest
+
+
 ```
+**Check Docker Images List (Before pulling new image *hello-world* from docker hub):**
+```bash
+docker images
+
+Output:
+REPOSITORY      TAG       IMAGE ID       CREATED        SIZE
+redis           latest    f2cd22713a18   6 weeks ago    128MB
+bitnami/kafka   3.7       cb4410499b04   8 months ago   648MB
+
+```
+
+
+**Check Docker Images List (After pulling new image *hello-world* from docker hub):** 
+```bash
+docker images
+
+Output:
+REPOSITORY      TAG       IMAGE ID       CREATED        SIZE
+hello-world     latest    1b44b5a3e06a   13 days ago    10.1kB
+redis           latest    f2cd22713a18   6 weeks ago    128MB
+bitnami/kafka   3.7       cb4410499b04   8 months ago   648MB
+
+```
+**NB:** See hello-world is added into the image list
+
+**3. Check Container List**
+
+```bash
+docker ps -a
+
+Output:
+CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS                    PORTS                    NAMES
+fb9501a951ad   bitnami/kafka:3.7   "/opt/bitnami/script…"   3 days ago    Exited (143) 2 days ago                            kafka
+a80935efa3cb   redis               "docker-entrypoint.s…"   6 weeks ago   Exited (255) 4 days ago   0.0.0.0:6379->6379/tcp   redis-server
+
+```
+**N.B:** See there is no *hello-world* image container is created, because we need to create it first.
+
+**4. Create a container from image**
+
+```bash
+docker create <image_name>
+
+docker create hello-world
+
+Output:
+c3628e97d00465ea3b5cbf43bc1ec6a626e68b912a1f0629937d0c315a1e775c
+
+
+```
+**Check Docker Container List (After creating new container from image):** 
+```bash
+
+docker ps -a
+
+CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS                    PORTS                    NAMES
+c3628e97d004   hello-world         "/hello"                 12 seconds ago   Created                                            quirky_payne
+fb9501a951ad   bitnami/kafka:3.7   "/opt/bitnami/script…"   3 days ago       Exited (143) 2 days ago                            kafka
+a80935efa3cb   redis               "docker-entrypoint.s…"   6 weeks ago      Exited (255) 4 days ago   0.0.0.0:6379->6379/tcp   redis-server
+
+```
+**N.B** See there is new container added into the list with *Container ID : c3628e97d004*
