@@ -101,7 +101,7 @@ Here, **rmi** means -- remove image
 
 
 
-### Workflow
+### Docker Step by Step: 
 **1. First, Search for an image in Docker Hub**
  
 ```bash
@@ -208,7 +208,7 @@ c3628e97d00465ea3b5cbf43bc1ec6a626e68b912a1f0629937d0c315a1e775c
 
 
 ```
-**Check Docker Container List (After creating new container from image):** 
+**Check/Verify Docker Container List again (After creating new container from image):** 
 ```bash
 
 docker ps -a
@@ -220,3 +220,62 @@ a80935efa3cb   redis               "docker-entrypoint.s…"   6 weeks ago      E
 
 ```
 **N.B** See there is new container added into the list with *Container ID : c3628e97d004*
+
+**5. Start the container**
+
+```bash
+docker start <container_id> or <container_name>
+
+docker start c3628e97d004
+
+Output:
+c3628e97d004
+```
+> For starting the container : we can use both **container_id** or **container_name**
+
+**6. Verify Container is Running or Not**
+
+```bash
+docker ps -a
+
+CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS                          PORTS                    NAMES
+c3628e97d004   hello-world         "/hello"                 8 minutes ago   Exited (0) About a minute ago                            quirky_payne
+fb9501a951ad   bitnami/kafka:3.7   "/opt/bitnami/script…"   3 days ago      Exited (143) 2 days ago                                  kafka
+a80935efa3cb   redis               "docker-entrypoint.s…"   6 weeks ago     Exited (255) 4 days ago         0.0.0.0:6379->6379/tcp   redis-server
+
+```
+**N.B** See the STATUS into the list
+
+**7. If you want to pause the container**
+
+```bash
+docker pause <container_id>
+
+docker pause c3628e97d004
+
+```
+**N.B** Your container must be running for executing the above command otherwise you will encounter with the below error: 
+```bash
+docker pause c3628e97d004
+Error response from daemon: container c3628e97d00465ea3b5cbf43bc1ec6a626e68b912a1f0629937d0c315a1e775c is not running
+
+```
+
+
+**8. If you want to Stop the container**
+
+```bash
+docker stop <container_id>
+```
+
+**9. If you want to Remove the container**
+
+```bash
+docker rm <container_id>
+```
+
+**10. Verify/Check Container is Removed**
+```bash
+docker ps -a 
+```
+
